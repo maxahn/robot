@@ -1,0 +1,19 @@
+current directory: /Users/Eve/lighthouse/lighthouse-test-oop-irobot_rev1/vendor/bundle/gems/byebug-4.0.5/ext/byebug
+/usr/local/opt/ruby/bin/ruby -r ./siteconf20160602-12181-pge61t.rb extconf.rb
+creating Makefile
+
+current directory: /Users/Eve/lighthouse/lighthouse-test-oop-irobot_rev1/vendor/bundle/gems/byebug-4.0.5/ext/byebug
+make "DESTDIR=" clean
+
+current directory: /Users/Eve/lighthouse/lighthouse-test-oop-irobot_rev1/vendor/bundle/gems/byebug-4.0.5/ext/byebug
+make "DESTDIR="
+compiling breakpoint.c
+compiling byebug.c
+compiling context.c
+compiling locker.c
+compiling threads.c
+linking shared-object byebug/byebug.bundle
+
+current directory: /Users/Eve/lighthouse/lighthouse-test-oop-irobot_rev1/vendor/bundle/gems/byebug-4.0.5/ext/byebug
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 byebug.bundle ./.gem.20160602-12181-1rwmdp7/byebug
