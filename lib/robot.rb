@@ -1,3 +1,5 @@
+require_relative 'errors/unattackable_enemy_error.rb'
+require_relative 'errors/robot_already_dead_error.rb'
 class Robot
 
   attr_reader :position, :items, :health    
@@ -51,11 +53,23 @@ class Robot
     under_zero?
   end
 
+  def dead?
+    health <= 0
+  end
+
   def heal(amount)
     @health += amount
     above_hundred?
   end
-  
+ 
+  def heal!(amount)     #may throw RobotAlreadyDeadError
+    if dead? 
+      raise RobotAlreadyDeadError.new("Robot is dead!") 
+    else
+      heal(amount)
+    end
+  end
+
   def above_hundred?    #sets health to 100 if above 100
     @health = 100 if health > 100
   end
@@ -72,5 +86,14 @@ class Robot
     end
   end
 
+  def attack!(enemy)     #may throw UnattackableEnemyError
+    if !enemy.is_a?(Robot)
+      raise UnattackableEnemyError.new("Cannot attack item.")
+    elsif self.dead? || enemy.dead?
+      raise RobotAlreadyDeadError.new("Enemy or Robot is dead.")
+    else
+      attack(enemy)
+    end
+  end
 end
 
