@@ -1,10 +1,12 @@
 class Weapon < Item
 
-  attr_reader :damage
+  attr_reader :damage, :range, :disposable 
 
-  def initialize(name, weight, damage)
+  def initialize(name, weight, damage, range = 1, disposable = false)
     super(name, weight)
     @damage = damage 
+    @range = range
+    @disposable = disposable
   end
     
   def hit(robot) 
