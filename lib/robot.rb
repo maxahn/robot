@@ -44,7 +44,9 @@ class Robot
   #----item methods----#
   
   def pick_up(item)
-    if !max_capacity? 
+    if item.is_a? BoxOfBolts
+      item.feed(self) if need_to_consume?(item)
+    elsif !max_capacity? 
       @equipped_weapon = item if item.is_a? Weapon #wasn't setting for some reason when using the accessor method 
       @items << item 
     end                #will it be in inventory if equipped? will assume yes   
@@ -80,6 +82,10 @@ class Robot
     else
       heal(amount)
     end
+  end
+
+  def need_to_consume?(bolts)
+    (100 - health) >= bolts.heal 
   end
 
   def above_hundred?    #sets health to 100 if above 100
