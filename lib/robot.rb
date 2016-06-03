@@ -29,15 +29,15 @@ class Robot
     @position[1] += 1 
   end
   
-  def within_range?(enemy) 
+  def within_range?(enemy, range) 
     #self_x = position[0]
     #self_y = position[1]
 
     #enemy_x = position[0]
     #enemy_y = position[1]
 
-    x_in_range = enemy.position[0].between?(position[0] - 1, position[0] + 1) 
-    y_in_range = enemy.position[1].between?(position[1] - 1, position[1] + 1)
+    x_in_range = enemy.position[0].between?(position[0] - range, position[0] + range) 
+    y_in_range = enemy.position[1].between?(position[1] - range, position[1] + range)
 
     x_in_range && y_in_range
   end
@@ -97,7 +97,13 @@ class Robot
   end
   
   def attack(enemy)
-    if within_range?(enemy) 
+    range = if equipped_weapon 
+              equipped_weapon.range 
+            else 
+              1
+            end
+    @equipped_weapon = nil unless !equipped_weapon.is_a? Grenade 
+    if within_range?(enemy, range) 
       if equipped_weapon 
         equipped_weapon.hit(enemy) 
       else
