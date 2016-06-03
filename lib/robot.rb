@@ -11,7 +11,7 @@ class Robot
     @health = 100
   end
 
-  #----move methods----#
+  #----position methods----#
   
   def move_left
     @position[0] -= 1 
@@ -28,7 +28,19 @@ class Robot
   def move_up
     @position[1] += 1 
   end
-   
+  
+  def within_range?(enemy) 
+    #self_x = position[0]
+    #self_y = position[1]
+
+    #enemy_x = position[0]
+    #enemy_y = position[1]
+
+    x_in_range = enemy.position[0].between?(position[0] - 1, position[0] + 1) 
+    y_in_range = enemy.position[1].between?(position[1] - 1, position[1] + 1)
+
+    x_in_range && y_in_range
+  end
   #----item methods----#
   
   def pick_up(item)
@@ -79,10 +91,12 @@ class Robot
   end
   
   def attack(enemy)
-    if equipped_weapon 
-      equipped_weapon.hit(enemy) 
-    else
-      enemy.wound(5) 
+    if within_range?(enemy) 
+      if equipped_weapon 
+        equipped_weapon.hit(enemy) 
+      else
+        enemy.wound(5) 
+      end
     end
   end
 
