@@ -2,13 +2,14 @@ require_relative 'errors/unattackable_enemy_error.rb'
 require_relative 'errors/robot_already_dead_error.rb'
 class Robot
 
-  attr_reader :position, :items, :health    
+  attr_reader :position, :items, :health, :shield    
   attr_accessor :equipped_weapon
 
   def initialize
     @position = [0,0]
     @items = []
     @health = 100
+    @shield = 50
   end
 
   #----position methods----#
@@ -57,8 +58,12 @@ class Robot
   #----health methods----#
   
   def wound(amount)
-    @health -= amount  
-    under_zero?
+    if shield > 0
+      @shield -= amount
+    else
+      @health -= amount  
+      under_zero?
+    end
   end
 
   def dead?
