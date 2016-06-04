@@ -4,13 +4,16 @@ class Robot
 
   attr_reader :position, :items, :health, :shield    
   attr_accessor :equipped_weapon
+  @@robot_list = []
 
   def initialize
     @position = [0,0]
     @items = []
     @health = 100
     @shield = 50
+    @@robot_list << self
   end
+
 
   #----position methods----#
   
@@ -53,6 +56,16 @@ class Robot
 
   def max_capacity?
     items_weight >= 250
+  end
+
+  def recharge    #recharges with battery from inventory
+    inventory.each do |item|
+      if item.is_a? Battery
+        @shield = 50
+        inventory.delete_at(find_index(item))
+        return
+      end
+    end
   end
   
   #----health methods----#
@@ -119,6 +132,14 @@ class Robot
     else
       attack(enemy)
     end
+  end
+
+  class << self 
+
+    def robot_list 
+      @@robot_list
+    end
+
   end
 end
 
